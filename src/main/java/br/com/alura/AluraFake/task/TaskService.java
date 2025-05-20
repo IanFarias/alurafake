@@ -9,7 +9,7 @@ import br.com.alura.AluraFake.task.dtos.NewSingleChoiceTaskDTO;
 import br.com.alura.AluraFake.task.entities.*;
 import br.com.alura.AluraFake.task.enums.Type;
 import br.com.alura.AluraFake.task.validators.*;
-import br.com.alura.AluraFake.util.AppException;
+import br.com.alura.AluraFake.infra.exception.AppException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

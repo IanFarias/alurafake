@@ -1,7 +1,7 @@
 package br.com.alura.AluraFake.task.validators;
 
 import br.com.alura.AluraFake.task.entities.TaskOption;
-import br.com.alura.AluraFake.util.AppException;
+import br.com.alura.AluraFake.infra.exception.AppException;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;

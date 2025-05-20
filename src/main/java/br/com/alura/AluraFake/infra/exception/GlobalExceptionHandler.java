@@ -1,5 +1,6 @@
-package br.com.alura.AluraFake.util;
+package br.com.alura.AluraFake.infra.exception;
 
+import br.com.alura.AluraFake.util.AppErrorDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

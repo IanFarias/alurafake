@@ -14,7 +14,7 @@ import br.com.alura.AluraFake.task.entities.*;
 import br.com.alura.AluraFake.task.enums.Type;
 import br.com.alura.AluraFake.user.Role;
 import br.com.alura.AluraFake.user.User;
-import br.com.alura.AluraFake.util.AppException;
+import br.com.alura.AluraFake.infra.exception.AppException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -3,7 +3,7 @@ package br.com.alura.AluraFake.task;
 
 import br.com.alura.AluraFake.task.entities.TaskOption;
 import br.com.alura.AluraFake.task.validators.OptionLengthValidator;
-import br.com.alura.AluraFake.util.AppException;
+import br.com.alura.AluraFake.infra.exception.AppException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

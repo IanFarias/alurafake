@@ -1,4 +1,4 @@
-package br.com.alura.AluraFake.util;
+package br.com.alura.AluraFake.infra.exception;
 
 import org.springframework.http.HttpStatus;
 
