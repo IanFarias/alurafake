@@ -1,6 +1,5 @@
 package br.com.alura.AluraFake.task.entities;
 
-import br.com.alura.AluraFake.task.entities.Task;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,13 +20,6 @@ public class TaskOption {
     Task task;
 
     public TaskOption() {}
-
-    public TaskOption(Long id, String option, boolean isCorrect, Task task) {
-        this.id = id;
-        this.option = option;
-        this.isCorrect = isCorrect;
-        this.task = task;
-    }
 
     public TaskOption(String option, boolean isCorrect) {
         this.option = option;

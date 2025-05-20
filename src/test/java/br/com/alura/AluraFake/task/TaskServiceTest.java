@@ -10,10 +10,7 @@ import br.com.alura.AluraFake.task.dtos.NewMultipleChoiceTaskDTO;
 import br.com.alura.AluraFake.task.dtos.NewOpentextTaskDTO;
 import br.com.alura.AluraFake.task.dtos.NewSingleChoiceTaskDTO;
 import br.com.alura.AluraFake.task.dtos.NewTaskOptionDTO;
-import br.com.alura.AluraFake.task.entities.MultipleChoiceTask;
-import br.com.alura.AluraFake.task.entities.OpenTextTask;
-import br.com.alura.AluraFake.task.entities.SingleChoiceTask;
-import br.com.alura.AluraFake.task.entities.Task;
+import br.com.alura.AluraFake.task.entities.*;
 import br.com.alura.AluraFake.task.enums.Type;
 import br.com.alura.AluraFake.user.Role;
 import br.com.alura.AluraFake.user.User;
@@ -25,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +48,7 @@ class TaskServiceTest {
 
         Course course = mock(Course.class);
         when(course.getStatus()).thenReturn(Status.BUILDING);
-        when(course.getTasks()).thenReturn(new ArrayList<>()); // sem tasks ainda
+        when(course.getTasks()).thenReturn(new ArrayList<>());
 
         when(courseService.findById(courseId)).thenReturn(course);
         when(taskRepository.existsByCourseIdAndOrder(courseId, 0)).thenReturn(false); // Para validar sequência
@@ -96,8 +94,12 @@ class TaskServiceTest {
         Course course = mock(Course.class);
         when(course.getStatus()).thenReturn(Status.BUILDING);
 
-        OpenTextTask existingTask = mock(OpenTextTask.class);
-        when(existingTask.getStatement()).thenReturn("Enunciado teste");
+        OpenTextTask existingTask  = new OpenTextTask();
+        existingTask.setStatement(dto.statement());
+        existingTask.setType(Type.OPENTEXT);
+        existingTask.setOrder(dto.order());
+        existingTask.setCourse(course);
+        existingTask.setCreatedAt(LocalDateTime.now());
 
         List existingTasks = List.of(existingTask);
         when(course.getTasks()).thenReturn(existingTasks);
@@ -234,8 +236,15 @@ class TaskServiceTest {
 
         Course course = new Course("Curso", "Desc", new User("Instrutor", "email@x.com", Role.INSTRUCTOR));
         course.setStatus(Status.BUILDING);
-        // Simula task com statement duplicado
-        Task existingTask = new SingleChoiceTask(duplicateStatement, Type.SINGLECHOICE, 1, course, List.of());
+
+        SingleChoiceTask existingTask = new SingleChoiceTask();
+        existingTask.setStatement(duplicateStatement);
+        existingTask.setType(Type.SINGLECHOICE);
+        existingTask.setOrder(1);
+        existingTask.setCourse(course);
+        existingTask.setCreatedAt(LocalDateTime.now());
+        existingTask.setOptions(new ArrayList<TaskOption>());
+
         course.setTasks(List.of(existingTask));
 
         when(courseService.findById(courseId)).thenReturn(course);
@@ -354,7 +363,14 @@ class TaskServiceTest {
         Course course = new Course("Curso", "Descrição", new User("Instrutor", "email@x.com", Role.INSTRUCTOR));
         course.setStatus(Status.BUILDING);
 
-        Task existingTask = new MultipleChoiceTask(duplicateStatement, Type.MULTIPLECHOICE, 1, course, List.of());
+        MultipleChoiceTask existingTask = new MultipleChoiceTask();
+        existingTask.setStatement(duplicateStatement);
+        existingTask.setType(Type.MULTIPLECHOICE);
+        existingTask.setOrder(1);
+        existingTask.setCourse(course);
+        existingTask.setCreatedAt(LocalDateTime.now());
+        existingTask.setOptions(new ArrayList<TaskOption>());
+
         course.setTasks(List.of(existingTask));
 
         when(courseService.findById(courseId)).thenReturn(course);

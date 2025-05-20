@@ -19,4 +19,12 @@ public class SingleChoiceTask extends Task {
         super(statement, type, order, course);
         this.options = options;
     }
+
+    public List<TaskOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<TaskOption> options) {
+        this.options = options;
+    }
 }
