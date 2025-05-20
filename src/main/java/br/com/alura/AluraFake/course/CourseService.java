@@ -42,6 +42,7 @@ public class CourseService {
 
         return courseRepository.save(course);
     }
+
     public List<CourseListItemDTO> listAllCourses() {
         return courseRepository.findAll().stream()
                 .map(CourseListItemDTO::new)
@@ -53,7 +54,7 @@ public class CourseService {
         Course course = this.findById(id);
 
         if(course.getStatus() != Status.BUILDING) {
-            new AppException(HttpStatus.BAD_REQUEST, "Course status invalid.");
+            throw new AppException(HttpStatus.BAD_REQUEST, "Course status invalid.");
         }
 
         List<Task> tasks = course.getTasks();
@@ -75,7 +76,7 @@ public class CourseService {
         return course;
     }
 
-    public void verifyTaskInSequenceOrder(List<Task> tasks) {
+    private void verifyTaskInSequenceOrder(List<Task> tasks) {
         List<Integer> orders = tasks.stream()
                 .map(Task::getOrder)
                 .sorted()
@@ -89,7 +90,7 @@ public class CourseService {
         }
     }
 
-    public void verifyHasAllTypesOfTasks(List<Task>tasks) {
+    private void verifyHasAllTypesOfTasks(List<Task>tasks) {
         EnumSet<Type> existingTypes = tasks.stream()
                 .map(Task::getType)
                 .collect(Collectors.toCollection(() -> EnumSet.noneOf(Type.class)));

@@ -21,6 +21,12 @@ public class NewCourseDTO {
 
     public NewCourseDTO() {}
 
+    public NewCourseDTO(String title, String desc, String email) {
+        this.title = title;
+        this.description = desc;
+        this.emailInstructor = email;
+    }
+
     public String getTitle() {
         return title;
     }
