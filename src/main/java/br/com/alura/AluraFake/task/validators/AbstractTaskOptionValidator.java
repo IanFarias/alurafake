@@ -24,5 +24,4 @@ public abstract class AbstractTaskOptionValidator implements TaskOptionValidator
             next.validate(options, statement);
         }
     }
-
 }

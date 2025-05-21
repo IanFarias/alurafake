@@ -9,5 +9,4 @@ public class AluraFakeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AluraFakeApplication.class, args);
 	}
-
 }

@@ -9,7 +9,6 @@ import java.util.List;
 public class MultipleChoiceCorrectOptionsValidator extends AbstractTaskOptionValidator {
     @Override
     public void validate(List<TaskOption> taskOptions, String statement) {
-
         long correct = taskOptions.stream().filter(TaskOption::isCorrect).count();
         long incorrect = taskOptions.stream().filter(opt -> !opt.isCorrect()).count();
 

@@ -9,7 +9,6 @@ import java.util.List;
 public class SingleChoiceOnlyOneCorrectValidator extends AbstractTaskOptionValidator{
     @Override
     public void validate(List<TaskOption> taskOptions, String statement) {
-
         long correct = taskOptions.stream().filter(TaskOption::isCorrect).count();
 
         if (correct != 1) {

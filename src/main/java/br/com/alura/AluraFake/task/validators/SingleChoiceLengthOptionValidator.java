@@ -20,5 +20,4 @@ public class SingleChoiceLengthOptionValidator extends  AbstractTaskOptionValida
 
         this.checkNext(taskOptions, statement);
     }
-
 }

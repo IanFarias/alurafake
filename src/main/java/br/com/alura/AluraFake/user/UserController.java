@@ -33,5 +33,4 @@ public class UserController {
     public List<UserListItemDTO> listAllUsers() {
         return userRepository.findAll().stream().map(UserListItemDTO::new).toList();
     }
-
 }

@@ -4,7 +4,6 @@ import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
 public class NewUserDTO {
-
     @NotNull
     @Length(min = 3, max = 50)
     private String name;
@@ -53,5 +52,4 @@ public class NewUserDTO {
     public User toModel() {
         return new User(name, email, role);
     }
-
 }
