@@ -1,10 +1,12 @@
 package br.com.alura.AluraFake.course;
 
+import br.com.alura.AluraFake.infra.security.TokenService;
 import br.com.alura.AluraFake.user.*;
 import br.com.alura.AluraFake.infra.exception.AppException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -18,24 +20,29 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CourseController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class CourseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean private CourseService courseService;
+    @MockBean
+    private CourseService courseService;
 
     @MockBean
     private UserRepository userRepository;
 
     @MockBean
     private CourseRepository courseRepository;
+
     @Autowired
     private ObjectMapper objectMapper;
 
+    @MockBean
+    private TokenService tokenService;
+
     @Test
     void newCourseDTO__should_return_bad_request_when_email_is_invalid() throws Exception {
-
         NewCourseDTO newCourseDTO = new NewCourseDTO();
         newCourseDTO.setTitle("Java");
         newCourseDTO.setDescription("Curso de Java");
@@ -55,7 +62,6 @@ class CourseControllerTest {
 
     @Test
     void newCourseDTO__should_return_bad_request_when_email_is_no_instructor() throws Exception {
-
         NewCourseDTO newCourseDTO = new NewCourseDTO();
         newCourseDTO.setTitle("Java");
         newCourseDTO.setDescription("Curso de Java");
@@ -139,5 +145,4 @@ class CourseControllerTest {
 
         verify(courseService, times(1)).publishCourse(courseId);
     }
-
 }
