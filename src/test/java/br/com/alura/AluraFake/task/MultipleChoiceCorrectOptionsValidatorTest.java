@@ -1,5 +1,8 @@
 package br.com.alura.AluraFake.task;
 
+import br.com.alura.AluraFake.task.entities.MultipleChoiceTask;
+import br.com.alura.AluraFake.task.entities.SingleChoiceTask;
+import br.com.alura.AluraFake.task.entities.Task;
 import br.com.alura.AluraFake.task.entities.TaskOption;
 import br.com.alura.AluraFake.task.validators.MultipleChoiceCorrectOptionsValidator;
 import br.com.alura.AluraFake.infra.exception.AppException;
@@ -15,10 +18,12 @@ class MultipleChoiceCorrectOptionsValidatorTest {
 
     @Test
     void should_pass_when_at_least_one_option_is_correct() {
+        var task = new MultipleChoiceTask();
+
         List<TaskOption> options = List.of(
-                new TaskOption("Option 1", false),
-                new TaskOption("Option 2", true),
-                new TaskOption("Option 3", true)
+                new TaskOption("Option 1", false, task),
+                new TaskOption("Option 2", true, task),
+                new TaskOption("Option 3", true, task)
         );
 
         assertDoesNotThrow(() -> validator.validate(options, "Some statement"));
@@ -26,9 +31,11 @@ class MultipleChoiceCorrectOptionsValidatorTest {
 
     @Test
     void should_throw_when_no_option_is_correct() {
+        var task = new MultipleChoiceTask();
+
         List<TaskOption> options = List.of(
-                new TaskOption("Option 1", true),
-                new TaskOption("Option 2", true)
+                new TaskOption("Option 1", true, task),
+                new TaskOption("Option 2", true, task)
         );
 
         AppException ex = assertThrows(AppException.class, () ->

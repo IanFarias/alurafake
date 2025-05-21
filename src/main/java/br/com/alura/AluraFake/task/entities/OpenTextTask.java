@@ -13,8 +13,8 @@ public class OpenTextTask extends Task{
 
     public OpenTextTask() {}
 
-    public OpenTextTask(String statement, Type type, int order, Course course, String opentext) {
-        super(statement, type, order, course);
+    public OpenTextTask(String statement,  int order, Course course, String opentext) {
+        super(statement, Type.OPENTEXT, order, course);
         this.opentext = opentext;
     }
 }

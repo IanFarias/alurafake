@@ -3,13 +3,14 @@ package br.com.alura.AluraFake.task.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "task_option")
 public class TaskOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "`option`")
     private String option;
 
     @Column
@@ -21,9 +22,10 @@ public class TaskOption {
 
     public TaskOption() {}
 
-    public TaskOption(String option, boolean isCorrect) {
+    public TaskOption(String option, boolean isCorrect, Task task) {
         this.option = option;
         this.isCorrect = isCorrect;
+        this.task = task;
     }
 
     public Long getId() {

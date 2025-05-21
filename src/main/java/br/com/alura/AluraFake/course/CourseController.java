@@ -26,14 +26,19 @@ public class CourseController {
     }
 
     @GetMapping("/course/all")
-    public ResponseEntity<List<CourseListItemDTO>> createCourse() {
+    public ResponseEntity<List<CourseListItemDTO>> listAll() {
         return ResponseEntity.ok(courseService.listAllCourses());
     }
 
     @PostMapping("/course/{id}/publish")
-    public ResponseEntity createCourse(@PathVariable("id") Long id) {
+    public ResponseEntity publish(@PathVariable("id") Long id) {
         courseService.publishCourse(id);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/course/{id}")
+    public ResponseEntity<CourseDetailedDTO> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(courseService.findOne(id));
     }
 }

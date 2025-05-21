@@ -48,7 +48,6 @@ public class TaskService {
 
         OpenTextTask task = new OpenTextTask (
                 newOpentextTaskDTO.statement(),
-                Type.OPENTEXT,
                 newOpentextTaskDTO.order(),
                 course,
                 null
@@ -77,9 +76,15 @@ public class TaskService {
             throw new AppException(HttpStatus.BAD_REQUEST, "statement already exist for this course.");
         }
 
+        SingleChoiceTask task = new SingleChoiceTask(
+                newSinglechoiceTaskDTO.statement(),
+                newSinglechoiceTaskDTO.order(),
+                course
+        );
+
         List<TaskOption> options = newSinglechoiceTaskDTO.options()
                 .stream()
-                .map(op -> new TaskOption(op.option(), op.isCorrect()))
+                .map(op -> new TaskOption(op.option(), op.isCorrect(), task))
                 .toList();
 
         TaskOptionValidator optionValidators = AbstractTaskOptionValidator.link(
@@ -92,13 +97,7 @@ public class TaskService {
 
         optionValidators.validate(options, newSinglechoiceTaskDTO.statement());
 
-        SingleChoiceTask task = new SingleChoiceTask(
-                newSinglechoiceTaskDTO.statement(),
-                Type.SINGLECHOICE,
-                newSinglechoiceTaskDTO.order(),
-                course,
-                options
-        );
+        task.setOptions(options);
 
         this.evaluateShiftTheTasksOrder(task.getCourse().getId(), task.getOrder());
 
@@ -123,9 +122,15 @@ public class TaskService {
             throw new AppException(HttpStatus.BAD_REQUEST, "statement already exist for this course.");
         }
 
+        MultipleChoiceTask task = new MultipleChoiceTask(
+                newMultipleChoiceTaskDTO.statement(),
+                newMultipleChoiceTaskDTO.order(),
+                course
+        );
+
         List<TaskOption> options = newMultipleChoiceTaskDTO.options()
                 .stream()
-                .map(op -> new TaskOption(op.option(), op.isCorrect()))
+                .map(op -> new TaskOption(op.option(), op.isCorrect(), task))
                 .toList();
 
         TaskOptionValidator optionValidators = AbstractTaskOptionValidator.link(
@@ -138,13 +143,7 @@ public class TaskService {
 
         optionValidators.validate(options, newMultipleChoiceTaskDTO.statement());
 
-        MultipleChoiceTask task = new MultipleChoiceTask(
-                newMultipleChoiceTaskDTO.statement(),
-                Type.MULTIPLECHOICE,
-                newMultipleChoiceTaskDTO.order(),
-                course,
-                options
-        );
+        task.setOptions(options);
 
         this.evaluateShiftTheTasksOrder(task.getCourse().getId(), task.getOrder());
 

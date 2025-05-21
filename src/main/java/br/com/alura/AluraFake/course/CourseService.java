@@ -1,5 +1,9 @@
 package br.com.alura.AluraFake.course;
 
+import br.com.alura.AluraFake.task.dtos.TaskListItemDTO;
+import br.com.alura.AluraFake.task.dtos.TaskOptionListItemDTO;
+import br.com.alura.AluraFake.task.entities.MultipleChoiceTask;
+import br.com.alura.AluraFake.task.entities.SingleChoiceTask;
 import br.com.alura.AluraFake.task.entities.Task;
 import br.com.alura.AluraFake.task.enums.Type;
 import br.com.alura.AluraFake.user.User;
@@ -67,6 +71,44 @@ public class CourseService {
         course.setPublishedAt(LocalDateTime.now());
 
         return courseRepository.save(course);
+    }
+
+    public CourseDetailedDTO findOne(Long id) {
+        Course course = this.findById(id);
+        List<Task> tasks = course.getTasks();
+
+        List<TaskListItemDTO> taskListItemDTOS = tasks.stream().map(task -> {
+            List<TaskOptionListItemDTO> optionListItemDTOS = null;
+
+            if (task.getType() == Type.SINGLECHOICE) {
+                SingleChoiceTask singleChoiceTask = (SingleChoiceTask) task;
+
+                optionListItemDTOS = singleChoiceTask.getOptions()
+                        .stream().map(taskOption ->
+                                new TaskOptionListItemDTO(taskOption.getOption(), taskOption.isCorrect())).toList();
+            }
+
+            if (task.getType() == Type.MULTIPLECHOICE) {
+                MultipleChoiceTask multipleChoiceTask = (MultipleChoiceTask) task;
+
+                optionListItemDTOS = multipleChoiceTask.getOptions()
+                        .stream().map(taskOption ->
+                                new TaskOptionListItemDTO(taskOption.getOption(), taskOption.isCorrect())).toList();
+            }
+
+            return new TaskListItemDTO(task.getStatement(), task.getOrder(), optionListItemDTOS);
+        }).toList();
+
+        var DTO = new CourseDetailedDTO(
+                course.getId(),
+                course.getTitle(),
+                course.getDescription(),
+                course.getInstructor().getEmail(),
+                course.getStatus(),
+                taskListItemDTOS
+        );
+
+        return DTO;
     }
 
     public Course findById(Long id) {
